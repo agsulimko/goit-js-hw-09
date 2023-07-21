@@ -85,7 +85,7 @@ const firstTimeNumber = Date.parse(date);
     };
     
 const btnStart = () => {
-      
+  inputEl.setAttribute('disabled', '')
 date = new Date();
   const firstTimeNumber = Date.parse(date);
   console.log(userTime);

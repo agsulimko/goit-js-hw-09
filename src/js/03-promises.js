@@ -21,37 +21,29 @@ const stepEl= document.querySelector('input[name="step"]');
 const amountEl = document.querySelector('input[name="amount"]');
  
 delayEl.addEventListener('input', (event) => {
-  if (Number(event.currentTarget.value) < 0) {
-    Notify.failure("❌Please choose a value greater than  0", options);
-   
-  } else {
+ 
     delayEl.textContent = Number(event.currentTarget.value);
     console.dir(delayEl.textContent);
-  };
-}
-);
+  });
 
 stepEl.addEventListener('input', (event) => {
-  if (Number(event.currentTarget.value) < 0) {
-    Notify.failure("❌Please choose a value greater than  0", options);
-    
-  } else {
+ 
     stepEl.textContent = Number(event.currentTarget.value);
     console.log(stepEl.textContent);
-  };
+
 });
 amountEl.addEventListener('input', (event) => {
-  if (Number(event.currentTarget.value) <= 0) {
-     Notify.failure("❌Please choose a value greater than  0", options); 
-  
-  } else {
-    amountEl.textContent = Number(event.currentTarget.value);
+ amountEl.textContent = Number(event.currentTarget.value);
     console.log(amountEl.textContent);
-  }
+
 });
 
 
    buttonEl.addEventListener('click', onPromiseCreate);
+
+if (delayEl.textContent < 0 || stepEl.textContent < 0 || amountEl.textContent<=0) {
+  Notify.failure("❌Please choose a value greater than  0", options);
+return} else {}
 
 function createPromise(position, delay) {
   // event.preventDefault();
@@ -71,20 +63,26 @@ function createPromise(position, delay) {
   } 
   ) 
 };
+
 function onPromiseCreate(event) {
   event.preventDefault();
-  console.log(event.currentTarget);
-  let promiseDelay = Number(delayEl.textContent);
-  for (let i = 1; i <= amountEl.textContent; i += 1) {
+  if (delayEl.textContent < 0 || stepEl.textContent < 0 || amountEl.textContent <= 0) {
+    Notify.failure("❌Please choose a value greater than  0", options);
+    return
+  } else {
+    console.log(event.currentTarget);
+    let promiseDelay = Number(delayEl.textContent);
+    for (let i = 1; i <= amountEl.textContent; i += 1) {
     
-    createPromise(i, promiseDelay)
-      .then(({ position, delay }) => {
-       Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, options );
-      })
-      .catch(({ position, delay }) => {
-        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, options);
-      });
-    promiseDelay += Number(stepEl.textContent);
+      createPromise(i, promiseDelay)
+        .then(({ position, delay }) => {
+          Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, options);
+        })
+        .catch(({ position, delay }) => {
+          Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, options);
+        });
+      promiseDelay += Number(stepEl.textContent);
+    };
+    // event.currentTarget.reset(); }
   };
-  // event.currentTarget.reset(); 
-};
+}
