@@ -41,9 +41,9 @@ amountEl.addEventListener('input', (event) => {
 
    buttonEl.addEventListener('click', onPromiseCreate);
 
-if (delayEl.textContent < 0 || stepEl.textContent < 0 || amountEl.textContent<=0) {
-  Notify.failure("❌Please choose a value greater than  0", options);
-return} else {}
+// if (delayEl.textContent < 0 || stepEl.textContent < 0 || amountEl.textContent<=0) {
+//   Notify.failure("❌Please choose a value greater than  0", options);
+// return} else {}
 
 function createPromise(position, delay) {
   // event.preventDefault();
