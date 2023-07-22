@@ -13,7 +13,7 @@ const optionsNotify = {
 import "flatpickr/dist/flatpickr.min.css";
 const bodyEl = document.querySelector('body');
 bodyEl.style.backgroundColor = '#f7eff4';
-console.log(bodyEl);
+
 
 const btnStartEl = document.querySelector('button[data-start]');
 const inputEl = document.querySelector('#datetime-picker');
@@ -22,8 +22,27 @@ const spanHours = document.querySelector('.value[data-hours]');
 const spanMinutes = document.querySelector('.value[data-minutes]');
 const spanSeconds = document.querySelector('.value[data-seconds]');
 
+const btnResetEl = document.createElement("button");
+btnResetEl.textContent = "Reset";
+btnResetEl.type = "button";
+btnResetEl.class = 'btn-reset';
+ btnStartEl.after(btnResetEl);
+console.log(btnResetEl);
+ btnResetEl.setAttribute('disabled', '');
+
+// const btnResetEl = document.querySelector('button[data-reset]');
+// console.log(btnResetEl);
 
 
+// const markup = buttonReset
+//   <button type="button" data-reset>Reset</button>;
+  //  bodyEl.insertAdjacentHTML=("beforeend",'<button type="button" data-reset>Reset</button>');
+
+
+console.log(bodyEl);
+
+
+    // .insertAdjacentHTML("beforeend", markup);
 
 // console.log(inputEl);
 // console.log(btnStartEl);
@@ -53,7 +72,7 @@ function convertMs(ms) {
 btnStartEl.setAttribute('disabled', '');
 let userTime;
 let date;
-
+let id;
 
 const options = {
   enableTime: true,
@@ -62,7 +81,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]); 
-  
+  //  inputEl.setAttribute('disabled', '')
       },
 };
 
@@ -72,11 +91,14 @@ inputEl.addEventListener('input', (event) => {
    userTime = Date.parse(event.target.value);
    date = new Date();
 const firstTimeNumber = Date.parse(date);
-  if (userTime <= firstTimeNumber) {
-     
+  if (userTime <= firstTimeNumber) { 
     Notify.failure("❌Please choose a date in the future", optionsNotify);
-         btnStartEl.setAttribute('disabled', '');
-  } else { btnStartEl.removeAttribute('disabled'); };
+     inputEl.removeAttribute('disabled');
+    btnStartEl.setAttribute('disabled', '')
+      ;
+  } else {
+    btnStartEl.removeAttribute('disabled');
+ inputEl.removeAttribute('disabled');  };
      }
 );
    
@@ -85,7 +107,8 @@ const firstTimeNumber = Date.parse(date);
     };
     
 const btnStart = () => {
-  inputEl.setAttribute('disabled', '')
+  inputEl.setAttribute('disabled', '');
+btnResetEl.removeAttribute('disabled');
 date = new Date();
   const firstTimeNumber = Date.parse(date);
   console.log(userTime);
@@ -93,7 +116,7 @@ date = new Date();
      btnStartEl.setAttribute('disabled', ''); 
    
        let timer = counterMs;
-      const id = setInterval(() => {
+       id = setInterval(() => {
          timer -= 1000;
          
          spanSeconds.textContent =pad(convertMs(timer).seconds);
@@ -103,13 +126,27 @@ date = new Date();
        
         if (timer === 0) {
           clearInterval(id);
-           btnStartEl.removeAttribute('disabled');
+          // btnStartEl.removeAttribute('disabled');
+          btnStartEl.setAttribute('disabled', ''); 
+          btnResetEl.setAttribute('disabled', '');
+          inputEl.removeAttribute('disabled');
+          
         }
           },1000);     
 };
+
+const btnReset = () => {
+  clearInterval(id);
+  spanSeconds.textContent ='00';
+         spanMinutes.textContent ='00';
+         spanHours.textContent ='00';
+  spanDays.textContent = '00';
+  btnResetEl.setAttribute('disabled', ''); 
+   inputEl.removeAttribute('disabled');
+ };
  
 btnStartEl.addEventListener('click', btnStart);
-
+btnResetEl.addEventListener('click', btnReset);
 flatpickr(inputEl, options);
 // console.log(date.toString());
 // console.log(options.defaultDate);
