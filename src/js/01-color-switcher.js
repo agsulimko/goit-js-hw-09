@@ -29,7 +29,7 @@ const btnStart = (event) => {
         
 };
 const btnStop = (event) => {
-    clearInterval(timerId);
+    // clearInterval(timerId);
     console.log('Buy');
     bodyEl.style.backgroundColor = '#fafafa';
     btnStopEl.setAttribute('disabled', '');
