@@ -20,7 +20,7 @@ const btnStopEl = document.querySelector('button[data-stop]');
 
 const btnStart = (event) => {
     //  background-color: #fafafa;
-    setInterval(() => {
+   const timerId = setInterval(() => {
         console.log('Hallo');
         bodyEl.style.backgroundColor = `${createRGB()}`;
     }, 1000);
@@ -29,7 +29,7 @@ const btnStart = (event) => {
         
 };
 const btnStop = (event) => {
-    
+    clearInterval();
     console.log('Buy');
     bodyEl.style.backgroundColor = '#fafafa';
     btnStopEl.setAttribute('disabled', '');
