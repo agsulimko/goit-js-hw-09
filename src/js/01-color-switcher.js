@@ -17,10 +17,10 @@ const btnStartEl = document.querySelector('button[data-start]');
 // console.log(btnStartEl);
 const btnStopEl = document.querySelector('button[data-stop]');
 // console.log(btnStartEl);
-
+let timerId;
 const btnStart = (event) => {
     //  background-color: #fafafa;
-   const timerId = setInterval(() => {
+    timerId = setInterval(() => {
         console.log('Hallo');
         bodyEl.style.backgroundColor = `${createRGB()}`;
     }, 1000);
@@ -29,7 +29,7 @@ const btnStart = (event) => {
         
 };
 const btnStop = (event) => {
-    clearInterval();
+    clearInterval(timerId);
     console.log('Buy');
     bodyEl.style.backgroundColor = '#fafafa';
     btnStopEl.setAttribute('disabled', '');
